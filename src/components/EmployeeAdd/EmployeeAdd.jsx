@@ -3,6 +3,8 @@ import { Form, Input, DatePicker, Select, Button } from 'antd'
 import { addEmployee } from '../../utils/index';
 import { GlobalContext } from '../../context/GlobalStates';
 import moment from 'moment';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const datePicker = {
     width: '100%',
@@ -13,6 +15,7 @@ const EmployeeAdd = () => {
     const { employee, record, setResponse, setIsModalOpen } = useContext(GlobalContext);
     const ref = useRef(null);
     const onFinish = (values) => {
+        
         const data = record && record.id > 0 ? { ...values, id: record.id } : { ...values }
         addEmployee(data)
             .then(response => {
@@ -22,6 +25,8 @@ const EmployeeAdd = () => {
             .catch(error => {
                 console.log("2", error)
             })
+        
+      
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -34,13 +39,13 @@ const EmployeeAdd = () => {
             if (employee === null) {
                 ref.current.setFieldsValue({
                     EmployeeName: null,
-                    EmployeeBirhDate: null,
+                    EmployeeBirthDate: null,
                     GenderID: null,
                     Phone: null,
                     Address: null
                 })
             } else {
-                ref.current.setFieldsValue({ ...employee, EmployeeBirhDate: moment(employee.EmployeeBirhDate) });
+                ref.current.setFieldsValue({ ...employee, EmployeeBirthDate: moment(employee.EmployeeBirthDate) });
             }
         }
     }, [employee])
@@ -63,12 +68,12 @@ const EmployeeAdd = () => {
                 </Form.Item>
 
                 <Form.Item
-                    name="EmployeeBirhDate"
+                    name="EmployeeBirthDate"
                 >
                     <DatePicker
                         style={datePicker}
                         placeholder="დაბადების თარიღი"
-                        format="DD.MM.YYYY"
+
                     />
                 </Form.Item>
 
@@ -88,9 +93,13 @@ const EmployeeAdd = () => {
                     name="Phone"
                     style={{ width: '100%' }}
                 >
-                    <Input
-                        placeholder="ტელეფონი"
-                    />
+                  <PhoneInput
+                  onlyCountries={['ge','ru','us']}
+                  masks={{geo: '...-...-...'}}
+                  
+            
+                
+                />
                 </Form.Item>
 
                 <Form.Item
@@ -102,11 +111,11 @@ const EmployeeAdd = () => {
                 </Form.Item>
 
                 <Form.Item >
-                    <Button type="primary" htmlType="submit">
+                    <Button  type="primary" htmlType="submit">
                         შენახვა
                     </Button>
                     <Button onClick={() => { setIsModalOpen(false) }}>
-                        გაუქმება
+                        გასვლა
                     </Button>
                 </Form.Item>
             </div>

@@ -32,7 +32,7 @@ export const addEmployee = data => {
     return new Promise((resolve, reject) => {
         axios.post(url, data)
             .then(response => {
-                resolve(response.data.data);
+                resolve(response.data);
             })
             .catch(error => {
                 reject(error.response.status);

@@ -7,6 +7,7 @@ import GeneralModal from '../GeneralModal/GeneralModal';
 import { GlobalContext } from '../../context/GlobalStates';
 import SearchField from '../SearchField/SearchField';
 import EmployeeAdd from '../EmployeeAdd/EmployeeAdd';
+import PhoneInput from 'react-phone-input-2';
 
 
 
@@ -14,7 +15,7 @@ import EmployeeAdd from '../EmployeeAdd/EmployeeAdd';
 
 const columns = [
     {
-        key: "id",
+        key: "ID",
         title: "ID",
         dataIndex: "id",
         responsive: ['lg']
@@ -42,6 +43,9 @@ const columns = [
         key: "phone",
         title: "Phone",
         dataIndex: "phone",
+       
+      
+            
     },
     {
         key: "address",
@@ -93,11 +97,13 @@ const EmployeeTable = () => {
     return (
         <>
                 <SearchField />
+                
                 <Table
                     columns={columns}
                     dataSource={employee}
                     pagination={false}
                     onRow={handleRightClick}
+                    
                 />
                 <ContextMenu {...record} />
                 <GeneralModal>

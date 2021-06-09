@@ -26,7 +26,7 @@ const ContextMenu = ({ record, visible, x, y }) => {
     }
 
     const handleDeleteClick = () => {
-        deleteEmployee(record.id)
+        deleteEmployee(record.ID)
             .then(response => {
                 setResponse(response);
             })
