@@ -7,7 +7,6 @@ import GeneralModal from '../GeneralModal/GeneralModal';
 import { GlobalContext } from '../../context/GlobalStates';
 import SearchField from '../SearchField/SearchField';
 import EmployeeAdd from '../EmployeeAdd/EmployeeAdd';
-import PhoneInput from 'react-phone-input-2';
 
 
 
@@ -15,7 +14,7 @@ import PhoneInput from 'react-phone-input-2';
 
 const columns = [
     {
-        key: "ID",
+        key: "id",
         title: "ID",
         dataIndex: "id",
         responsive: ['lg']
@@ -24,6 +23,7 @@ const columns = [
         key: "employeeName",
         title: "FullName",
         dataIndex: "employeeName"
+        
     },
     {
         key: "employeeBirthDate",
@@ -35,6 +35,14 @@ const columns = [
         responsive: ['md']
     },
     {
+        key: "age",
+        title: "Age",
+        dataIndex: "age",
+        render(Age) {
+            return Age;
+        },
+    },
+    {
         key: "genderID",
         title: "Gender",
         dataIndex: "genderName",
@@ -43,9 +51,6 @@ const columns = [
         key: "phone",
         title: "Phone",
         dataIndex: "phone",
-       
-      
-            
     },
     {
         key: "address",
@@ -66,7 +71,7 @@ const EmployeeTable = () => {
         x: 0,
         y: 0
     });
-    const { response, searchField } = useContext(GlobalContext);
+    const { response,setId, searchField } = useContext(GlobalContext);
     const handleRightClick = record => ({
         onContextMenu: event => {
             event.preventDefault()
@@ -76,6 +81,7 @@ const EmployeeTable = () => {
                     document.removeEventListener(`click`, onClickOutside)
                 })
             }
+            setId(record.id)
             setRecord({
                 record,
                 visible: true,
@@ -97,13 +103,12 @@ const EmployeeTable = () => {
     return (
         <>
                 <SearchField />
-                
                 <Table
+                  loading={employee.length > 0 ? false : true}
                     columns={columns}
                     dataSource={employee}
                     pagination={false}
                     onRow={handleRightClick}
-                    
                 />
                 <ContextMenu {...record} />
                 <GeneralModal>
